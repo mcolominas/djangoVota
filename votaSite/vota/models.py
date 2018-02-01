@@ -21,8 +21,15 @@ class Encuesta(models.Model):
 class Opcion(models.Model):
 	encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
 	nombre = models.CharField(max_length=100)
-	def votos_Totales(self):
+	def votos_totales(self):
 		return Voto.objects.filter(opcion=self).count()
+
+	def porcentaje_votos(self):
+		cantVotos = self.votos_totales();
+		if cantVotos == 0:
+			return "0%";
+		else:
+			return str(round((cantVotos / Voto.objects.filter(opcion__encuesta=self.encuesta).count() * 100), 2)) + "%"
 	def __str__(self):
 		return self.nombre
 
