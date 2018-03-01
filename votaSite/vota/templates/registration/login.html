@@ -1,0 +1,70 @@
+{% extends "master.html" %}
+
+{% block content %}
+<div class="container">
+        <div class="col-md-12">
+            <div class="form-control-feedback">
+                <span class="text-danger align-middle text-center d-block">
+                    {% if form.errors %}
+                       <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %}
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                        <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                    {% else %}
+                        <p>Please login to see this page.</p>
+                        {% endif %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <form class="form-horizontal" role="form" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+            {% else %}
+                <input type="hidden" name="next" value="{% url 'index' %}" />
+            {% endif %}
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 align-middle text-center">
+                    <h2>Login</h2>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="sr-only" for="id_username">Username</label>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                            <input type="text" name="username" class="form-control" maxlength="254" required autofocus id="id_username" placeholder="username" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="sr-only" for="id_password">Password</label>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                            <input type="password" name="password" class="form-control" id="id_password"
+                                   placeholder="Password" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 1rem">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
+                    <a class="btn btn-link" href="{% url 'password_reset' %}">Forgot Your Password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

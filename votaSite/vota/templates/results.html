@@ -1,9 +1,17 @@
-<h1>{{ question.nombre }}</h1>
+{% extends "master.html" %}
 
-<ul>
-{% for choice in question.opcion_set.all %}
-    <li>{{ choice.nombre }} -- {{ choice.votos_totales }} voto{{ choice.votos_totales|pluralize }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+<div class="container">
+        <div class="row col-md-12 text-center">
+            <h1>{{ question.nombre }}</h1>
 
-<a href="{% url 'detail' question.id %}">Vote again?</a>
+			<ul class="text-left block-center">
+			{% for choice in question.opcion_set.all %}
+			    <li>{{ choice.nombre }} -- {{ choice.votos_totales }} voto{{ choice.votos_totales|pluralize }}</li>
+			{% endfor %}
+			</ul>
+
+			<span class="w-100"><a href="{% url 'detail' question.id %}">Vote again?</a></span>
+        </div>
+    </div>
+{% endblock %}

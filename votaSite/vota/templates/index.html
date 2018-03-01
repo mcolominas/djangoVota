@@ -1,12 +1,17 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}" />
+{% extends "master.html" %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'detail' question.id %}">{{ question.nombre }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% block content %}
+<div class="container">
+        <div class="row col-md-12">
+            {% if latest_question_list %}
+			    <ul>
+			    {% for question in latest_question_list %}
+			        <li><a href="{% url 'detail' question.id %}">{{ question.nombre }}</a></li>
+			    {% endfor %}
+			    </ul>
+			{% else %}
+			    <p>No polls are available.</p>
+			{% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,12 +1,22 @@
-<h1>{{ question.nombre }}</h1>
+{% extends "master.html" %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
+<div class="container">
+        <div class="row col-md-12 text-center">
+            <h1>{{ question.nombre }}</h1>
 
-<form action="{% url 'vote' question.id %}" method="post">
-{% csrf_token %}
-{% for opcion in question.opcion_set.all %}
-    <input type="radio" name="opcion" id="opcion{{ forloop.counter }}" value="{{ opcion.id }}" />
-    <label for="opcion{{ forloop.counter }}">{{ opcion.nombre }}</label><br />
-{% endfor %}
-<input type="submit" value="Vote" />
-</form>
+			{% if error_message %}
+				<p><strong>{{ error_message }}</strong></p>
+			{% endif %}
+
+			<form class="block-center" action="{% url 'vote' question.id %}" method="post">
+				{% csrf_token %}
+				{% for opcion in question.opcion_set.all %}
+				    <input type="radio" name="opcion" id="opcion{{ forloop.counter }}" value="{{ opcion.id }}" />
+				    <label for="opcion{{ forloop.counter }}">{{ opcion.nombre }}</label><br />
+				{% endfor %}
+				<input type="submit" value="Vote" />
+			</form>
+        </div>
+    </div>
+{% endblock %}

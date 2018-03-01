@@ -1,8 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     # ex: /
     path('', views.index, name='index'),
     # ex: /5/
@@ -11,4 +13,6 @@ urlpatterns = [
     path('<int:question_id>/results/', views.results, name='results'),
     # ex: /5/vote/
     path('<int:question_id>/vote/', views.vote, name='vote'),
+    
+
 ]
